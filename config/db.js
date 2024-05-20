@@ -1,6 +1,5 @@
 const { Client } = require('pg')
 
-const conectarDB = async () => {
     try{
         const connection = {
                 user: 'postgres',
@@ -13,5 +12,7 @@ const conectarDB = async () => {
             console.log(`error : ${error.message}`);
             process.exit(1);
     }
-}
-module.exports = conectarDB;
+
+const client = new Client(connection)
+
+module.exports = client;
