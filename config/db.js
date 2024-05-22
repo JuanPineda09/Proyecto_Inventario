@@ -1,7 +1,7 @@
-import sql = from "pg";
+const pg = require('pg');
 //Instalar Pool = postgres-pool
 
-const {Pool} = sql;
+const {Pool} = pg;
 
 export const pool = new Pool({
     user: 'postgres',
