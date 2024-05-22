@@ -1,18 +1,21 @@
-const pg = require('pg');
-//Instalar Pool = postgres-pool
+const {Pool} = require("postgres-pool");
 
-const {Pool} = pg;
-
-export const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'inventario',
-    password: 'G4t0*T0x1c0.24',
-    port: 5432
-})
-try {
-    await pool.query('SELECT * NOW()')
-    console.log('Database Connection Success')
-} catch (error) {
-    console.log(error)
+const conectarDB = async () => {
+    try {
+        const pool =  new Pool({
+            user: 'postgres',
+            host: 'localhost',
+            database: 'inventario',
+            password: 'G4t0*T0x1c0*24',
+            port: 5432
+        })
+        await pool.query('SELECT NOW()');
+        console.log('Database Connection Success');
+        console.log(pool)
+    } catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
 }
+
+module.exports = conectarDB;
