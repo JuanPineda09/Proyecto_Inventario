@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const userRoutes = require("./routers/usersRoutes")
-
+require('dotenv').config()
 
 const app = express();
 
@@ -10,6 +10,6 @@ app.use(express.json())
 
 app.use(userRoutes);
 
-app.listen(4000, () =>{
-    console.log("Servidor corriendo en el puerto 4000");
+app.listen(process.env.SERVPORT, () =>{
+    console.log("El servidor esta corriendo");
 });

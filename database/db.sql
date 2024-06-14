@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
                     id_empleado SERIAL PRIMARY KEY NOT NULL,
                     nom_empleado VARCHAR(255) NOT NULL,
                     email VARCHAR(255) NOT NULL,
-                    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    credenciales VARCHAR(500) NOT NULL
                 );
 
 CREATE TABLE IF NOT EXISTS categoria_dispositivos (
@@ -26,5 +27,3 @@ REFERENCES usuarios(id_empleado);
 ALTER TABLE dispositivos
 ADD CONSTRAINT FK_categoria FOREIGN KEY (fk_id_categoria)
 REFERENCES categoria_dispositivos(id_categoria);
-
-INSERT INTO usuarios (nom_empleado, email) VALUES ('Juan Pineda', 'juan.pineda@outlook.com');
