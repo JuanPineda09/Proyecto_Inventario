@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 CREATE TABLE IF NOT EXISTS categoria_dispositivos (
                     id_categoria SERIAL PRIMARY KEY NOT NULL,
                     nom_categoria VARCHAR(255) NOT NULL,
-                    descripción VARCHAR(255) NOT NULL
+                    descripcion VARCHAR(255) NOT NULL
                 );
 
 CREATE TABLE IF NOT EXISTS dispositivos (

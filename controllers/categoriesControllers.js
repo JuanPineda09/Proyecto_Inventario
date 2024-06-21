@@ -1,9 +1,8 @@
 const pool = require('../config/db');
-const bcrypt = require('bcrypt');
 
-exports.getUsers = async (req, res) => {
+exports.getCategories = async (req, res) => {
     try {
-        const { rows } = await pool.query('SELECT * FROM usuarios');
+        const { rows } = await pool.query('SELECT * FROM categoria_dispositivos');
         res.json(rows);
     } catch (err) {
         console.error(err.message);
@@ -11,10 +10,10 @@ exports.getUsers = async (req, res) => {
     }
 }
 
-exports.getIdUsers = async (req, res) => {
+exports.getIdCategories = async (req, res) => {
     try {
         const {id} = req.params;
-        const { rows } = await pool.query('SELECT * FROM usuarios WHERE id_empleado = $1', [id]);
+        const { rows } = await pool.query('SELECT * FROM categoria_dispositivos WHERE id_categoria = $1', [id]);
         res.json(rows);
     } catch (err) {
         console.error(err.message);
@@ -22,15 +21,10 @@ exports.getIdUsers = async (req, res) => {
     }
 }
 
-exports.postUsers = async (req, res) => {
+exports.postCategories = async (req, res) => {
     try {
         const data = req.body;
-        const {credenciales} = req.body;
-        const salt = bcrypt.genSaltSync(10)
-        const crypt = await bcrypt.hash(credenciales, salt);
-        const { rows } = await pool.query('INSERT INTO usuarios (nom_empleado, email, credenciales) VALUES ($1, $2, $3) RETURNING *',[data.nom_empleado, data.email, crypt]);
-        
-
+        const { rows } = await pool.query('INSERT INTO categoria_dispositivos (nom_categoria, descripcion) VALUES ($1, $2) RETURNING *',[data.nom_categoria, data.descripcion]);
         
         res.status(201)
         return res.json(rows[0]);
@@ -40,9 +34,9 @@ exports.postUsers = async (req, res) => {
     }
 }
 
-exports.deleteIdUsers = async (req, res) => {
+exports.deleteIdCategories = async (req, res) => {
     const {id} = req.params;
-    const { rowCount } = await pool.query('DELETE FROM usuarios WHERE id_empleado = $1 RETURNING *', [id]);
+    const { rowCount } = await pool.query('DELETE FROM categoria_dispositivos WHERE id_categoria = $1 RETURNING *', [id]);
     if(rowCount == 0){
         res.status(404).json({ messages: "User not found"});
     }
@@ -52,11 +46,11 @@ exports.deleteIdUsers = async (req, res) => {
     return res.sendStatus(204);
 }
 
-exports.putIdUsers = async (req, res) => {
+exports.putIdCategories = async (req, res) => {
     try {
         const {id} = req.params;
         const data = req.body;
-        const result = await pool.query('UPDATE usuarios SET nom_empleado = $1, email = $2 WHERE id_empleado = $3',[data.nom_empleado, data.email, id]);
+        const result = await pool.query('UPDATE categoria_dispositivos SET nom_categoria = $1, descripcion = $2 WHERE id_categoria = $3',[data.nom_categoria, data.descripcion, id]);
 
         res.status(202)
         return res.send("User update "+ id);
